@@ -11,6 +11,7 @@ pipeline {
         stage('Run Cypress Tests') { // Stage for running tests within the Docker container
             steps {
                 script {
+		    sh "npm install"
                     sh "npx cypress run" // Assuming a Node.js project with npm tests
                     }
                 }
