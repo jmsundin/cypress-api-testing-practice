@@ -1,7 +1,13 @@
 pipeline {
-    agent any // Specifies that the pipeline can run on any available Jenkins agent
+    agent { docker { image 'node:16' } } 
 
     stages {
+        stage('Build') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
         stage('Checkout') { // Stage for cloning the repository
             steps {
                 checkout scm // Use the SCM configured in your Jenkins job
@@ -11,7 +17,6 @@ pipeline {
         stage('Run Cypress Tests') { // Stage for running tests within the Docker container
             steps {
                 script {
-		    sh "npm install"
                     sh "npx cypress run" // Assuming a Node.js project with npm tests
                     }
                 }
